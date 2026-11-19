@@ -45,11 +45,13 @@ Use `sample_participant_template.csv` or create an XLS/XLSX file with one column
 - Route `/api` to Express and serve the `client/dist` build as the frontend.
 - The migration grants direct browser access no RLS permissions.
 
-### Vercel + Render
+### Single-service Render deployment
+
+The Express service also serves the built React app, so the frontend and API can share one Render URL.
 
 1. Push the repository to a private GitHub repository; never commit `.env`.
-2. Create a Render Web Service from the repository root using `render.yaml`. Set its requested secret environment values in Render. The free instance may sleep after inactivity, so it is not ideal for time-critical event operation.
-3. After Render deploys, copy its `onrender.com` service URL into `client/vercel.json`, replacing `https://YOUR-RENDER-SERVICE.onrender.com`.
-4. Set `CLIENT_ORIGIN` in Render to the exact Vercel production URL, then redeploy the API.
-5. Import the same GitHub repository into Vercel with the root directory set to `client`, and deploy. The Vercel rewrite proxies `/api` through the frontend origin, including the organizer session cookie.
-6. Verify `/api/health`, organizer login, participant QR retrieval, and scans on the deployed domains before the event.
+2. Create a Render Web Service from the repository root using `render.yaml`. Set its requested secret environment values in Render.
+3. Set `CLIENT_ORIGIN` to the exact Render service URL after it is created, and keep `COOKIE_SECURE=true`.
+4. Verify `/api/health`, organizer login, participant QR retrieval, and scans on the deployed URL before the event.
+
+Render Free instances sleep after inactivity and can take around a minute to wake. This may be unsuitable for time-critical event operation.

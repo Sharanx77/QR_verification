@@ -3,8 +3,8 @@ services:
     name: college-inauguration-api
     runtime: node
     plan: free
-    buildCommand: npm ci && npm run build -w server
-    startCommand: npm start -w server
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_VERSION

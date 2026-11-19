@@ -6,6 +6,7 @@ import rateLimit from "express-rate-limit";
 import multer from "multer";
 import bcrypt from "bcryptjs";
 import XLSX from "xlsx";
+import { fileURLToPath } from "node:url";
 import { z } from "zod";
 import { env } from "./config.js";
 import { supabase } from "./db.js";
@@ -367,5 +368,15 @@ app.patch("/api/organizer/organizers/:id", requireAuth("administrator"), async (
   if (error) return res.status(500).json({ error: "Could not update organizer." });
   res.json({ organizer: data });
 });
+
+const clientDist = fileURLToPath(new URL("../../client/dist/", import.meta.url));
+app.use(express.static(clientDist));
+app.get("*", (req, res, next) => {
+  if (req.path.startsWith("/api/")) return next();
+  res.sendFile("index.html", { root: clientDist }, error => {
+    if (error) next(error);
+  });
+});
+app.use("/api", (_req, res) => res.status(404).json({ error: "API route not found" }));
 
 app.listen(env.port, () => console.log(`Server listening on http://localhost:${env.port}`));
