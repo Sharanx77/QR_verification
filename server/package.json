@@ -1,0 +1,42 @@
+{
+  "name": "ieee-qr-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "create-organizer": "tsx scripts/create-organizer.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.45.4",
+    "bcryptjs": "2.4.3",
+    "cookie-parser": "1.4.7",
+    "cors": "2.8.5",
+    "csv-parse": "5.5.6",
+    "dotenv": "16.4.7",
+    "express": "4.21.1",
+    "express-rate-limit": "7.4.1",
+    "express-session": "1.18.1",
+    "jsonwebtoken": "9.0.2",
+    "helmet": "8.0.0",
+    "multer": "2.0.2",
+    "qrcode": "1.5.4",
+    "xlsx": "0.18.5",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "2.4.6",
+    "@types/cookie-parser": "1.4.7",
+    "@types/cors": "2.8.17",
+    "@types/express": "5.0.0",
+    "@types/express-session": "1.18.1",
+    "@types/jsonwebtoken": "9.0.7",
+    "@types/multer": "2.0.0",
+    "@types/node": "22.10.2",
+    "@types/qrcode": "1.5.5",
+    "tsx": "4.19.2",
+    "typescript": "5.7.2"
+  }
+}
