@@ -256,9 +256,15 @@ app.post("/api/organizer/verify", requireAuth(), async (req: AuthRequest, res) =
     p_qr_token_identifier: identifier,
     p_organizer_id: req.organizer!.id
   });
-  if (error) return res.status(500).json({ status: "invalid", message: "INVALID QR CODE" });
+  if (error) {
+    console.error("QR verification RPC failed", { code: error.code, message: error.message });
+    return res.status(500).json({ status: "error", message: "Verification service failed. Please retry." });
+  }
   const result = Array.isArray(data) ? data[0] : data;
-  if (!result) return res.status(200).json({ status: "invalid", message: "INVALID QR CODE" });
+  if (!result) {
+    console.error("QR verification RPC returned no result");
+    return res.status(500).json({ status: "error", message: "Verification service failed. Please retry." });
+  }
   res.json({
     status: result.status,
     message: result.status === "valid" ? "VERIFIED SUCCESSFULLY" : result.status === "duplicate" ? "ALREADY CHECKED IN" : "QR NOT RECOGNIZED / REVOKED",
