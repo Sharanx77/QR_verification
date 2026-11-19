@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
-dotenv.config({ path: fileURLToPath(new URL("../../.env", import.meta.url)) });
+dotenv.config({ path: resolve(process.cwd(), "../.env") });
 
 export const env = {
   port: Number(process.env.PORT ?? 4000),

@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import { createClient } from "@supabase/supabase-js";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
-dotenv.config({ path: fileURLToPath(new URL("../../.env", import.meta.url)) });
+dotenv.config({ path: resolve(process.cwd(), "../.env") });
 const url = process.env.SUPABASE_URL;
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const username = process.env.ADMIN_USERNAME;

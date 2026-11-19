@@ -6,7 +6,7 @@ import rateLimit from "express-rate-limit";
 import multer from "multer";
 import bcrypt from "bcryptjs";
 import XLSX from "xlsx";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 import { z } from "zod";
 import { env } from "./config.js";
 import { supabase } from "./db.js";
@@ -369,7 +369,7 @@ app.patch("/api/organizer/organizers/:id", requireAuth("administrator"), async (
   res.json({ organizer: data });
 });
 
-const clientDist = fileURLToPath(new URL("../../client/dist/", import.meta.url));
+const clientDist = resolve(process.cwd(), "../client/dist");
 app.use(express.static(clientDist));
 app.get("*", (req, res, next) => {
   if (req.path.startsWith("/api/")) return next();
